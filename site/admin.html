@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Leads — Admin</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --ground:    #101010;
+    --panel:     #171716;
+    --panel-2:   #1D1D1B;
+    --ink:       #F3F3F0;
+    --ink-2:     #A3A39D;
+    --ink-3:     #6E6E68;
+    --rule:      #262624;
+    --rule-2:    #35352F;
+    --volt:      #D9FF3D;
+    --on-volt:   #101010;
+    --slot-bg:   #15170C;
+    --bad:       #E5484D;
+
+    --display: "Archivo", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .shell { max-width: 1180px; margin: 0 auto; padding-inline: 20px; }
+
+  /* ---------------- bar ---------------- */
+
+  .bar {
+    border-bottom: 1px solid var(--rule);
+    background: var(--panel);
+  }
+
+  .bar__in {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 18px;
+    padding-block: 14px;
+  }
+
+  .bar__name {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .bar__right { display: flex; align-items: center; gap: 10px; }
+
+  /* ---------------- gate ---------------- */
+
+  .gate { max-width: 460px; margin-block: 90px; }
+
+  .gate h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    font-variation-settings: "wdth" 110;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    line-height: 0.95;
+    margin: 0 0 12px;
+  }
+
+  .gate p { color: var(--ink-2); font-size: 14px; margin: 0 0 22px; }
+
+  label.k {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 7px;
+  }
+
+  input[type="password"], input[type="text"], select {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--ground);
+    border: 1px solid var(--rule-2);
+    border-radius: 3px;
+    padding: 10px 12px;
+    width: 100%;
+  }
+
+  select { width: auto; padding-right: 30px; }
+
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--volt); }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--volt);
+    background: var(--volt);
+    color: var(--on-volt);
+    cursor: pointer;
+    transition: background 0.16s ease, color 0.16s ease, opacity 0.16s ease;
+  }
+
+  .btn:hover:not(:disabled) { background: transparent; color: var(--volt); }
+  .btn:disabled { opacity: 0.5; cursor: progress; }
+
+  .btn--quiet {
+    background: transparent;
+    color: var(--ink-2);
+    border-color: var(--rule-2);
+  }
+
+  .btn--quiet:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-3); background: transparent; }
+
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--volt);
+    outline-offset: 2px;
+  }
+
+  .note { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+  .note--bad { color: var(--bad); }
+
+  /* ---------------- toolbar ---------------- */
+
+  .tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    padding-block: 22px;
+  }
+
+  .count {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-left: auto;
+  }
+
+  /* ---------------- table ---------------- */
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 3px; }
+
+  table { border-collapse: collapse; width: 100%; min-width: 760px; }
+
+  th {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: left;
+    padding: 12px 14px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    font-size: 14px;
+  }
+
+  tbody tr { cursor: pointer; transition: background 0.14s ease; }
+  tbody tr:hover { background: var(--panel); }
+  tbody tr[aria-selected="true"] { background: var(--slot-bg); }
+  tbody tr:last-child td { border-bottom: 0; }
+
+  td.mono { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+  td .who { font-weight: 600; }
+  td .co { display: block; font-size: 12.5px; color: var(--ink-3); }
+
+  .pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 3px 10px;
+    border: 1px solid var(--rule-2);
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+
+  .pill[data-s="New"]      { background: var(--volt); color: var(--on-volt); border-color: var(--volt); }
+  .pill[data-s="Read"]     { color: var(--ink); }
+  .pill[data-s="Replied"]  { color: #7FC4B4; border-color: #2E4F48; }
+  .pill[data-s="Archived"] { color: var(--ink-3); }
+
+  .empty { padding: 44px 16px; text-align: center; color: var(--ink-3); font-family: var(--mono); font-size: 13px; }
+
+  /* ---------------- detail ---------------- */
+
+  .detail {
+    margin-block: 20px 60px;
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--volt);
+    border-radius: 3px;
+    background: var(--panel);
+    padding: 22px;
+  }
+
+  .detail h2 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    font-variation-settings: "wdth" 104;
+    letter-spacing: -0.02em;
+    margin: 0 0 4px;
+  }
+
+  .detail__meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-bottom: 18px;
+  }
+
+  .detail__meta a { color: var(--volt); text-decoration: none; }
+  .detail__meta a:hover { text-decoration: underline; }
+
+  .detail__body {
+    background: var(--ground);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 16px;
+    white-space: pre-wrap;
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  .detail__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px 16px;
+    margin-top: 18px;
+  }
+
+  .detail__row .grow { flex: 1 1 260px; }
+
+  textarea {
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--ground);
+    border: 1px solid var(--rule-2);
+    border-radius: 3px;
+    padding: 10px 12px;
+    width: 100%;
+    min-height: 62px;
+    resize: vertical;
+  }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="shell bar__in">
+    <span class="bar__name">Leads · Admin</span>
+    <span class="bar__right">
+      <span class="note" id="conn"></span>
+      <button class="btn btn--quiet" id="signOut" hidden>Sign out</button>
+    </span>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- ---------------- gate ---------------- -->
+  <section class="gate" id="gate">
+    <h1>Admin key</h1>
+    <p>
+      Paste the admin key to read the enquiries. It is kept in this browser's session
+      storage and cleared when you close the tab.
+    </p>
+    <label class="k" for="keyInput">X-Admin-Key</label>
+    <input type="password" id="keyInput" autocomplete="off" spellcheck="false">
+    <div style="margin-top:16px;display:flex;gap:12px;align-items:center">
+      <button class="btn" id="unlock">Unlock</button>
+      <span class="note note--bad" id="gateError"></span>
+    </div>
+  </section>
+
+  <!-- ---------------- app ---------------- -->
+  <section id="app" hidden>
+    <div class="tools">
+      <label class="k" for="statusFilter" style="margin:0">Status</label>
+      <select id="statusFilter">
+        <option value="">All</option>
+        <option value="New">New</option>
+        <option value="Read">Read</option>
+        <option value="Replied">Replied</option>
+        <option value="Archived">Archived</option>
+      </select>
+      <button class="btn btn--quiet" id="refresh">Refresh</button>
+      <span class="count" id="count"></span>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:56px">#</th>
+            <th>From</th>
+            <th>Email</th>
+            <th style="width:120px">Status</th>
+            <th style="width:170px">Received</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>No enquiries here yet.</div>
+    </div>
+
+    <div class="detail" id="detail" hidden></div>
+  </section>
+
+</div>
+
+<script>
+  (function () {
+    // Same origin in production; the API's dev port when opened from a local static server.
+    var API_BASE = window.API_BASE !== undefined
+      ? window.API_BASE
+      : (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && location.port !== "5223"
+          ? "http://localhost:5223"
+          : "");
+
+    var STATUSES = ["New", "Read", "Replied", "Archived"];
+
+    var gate     = document.getElementById("gate");
+    var app      = document.getElementById("app");
+    var keyInput = document.getElementById("keyInput");
+    var gateError= document.getElementById("gateError");
+    var rows     = document.getElementById("rows");
+    var empty    = document.getElementById("empty");
+    var countEl  = document.getElementById("count");
+    var detail   = document.getElementById("detail");
+    var filter   = document.getElementById("statusFilter");
+    var conn     = document.getElementById("conn");
+    var signOut  = document.getElementById("signOut");
+
+    var key = null;
+    var selectedId = null;
+
+    // sessionStorage, not localStorage: the key should not outlive the tab.
+    function remember(value) {
+      try { sessionStorage.setItem("adminKey", value); } catch (e) { /* private mode */ }
+    }
+    function recall() {
+      try { return sessionStorage.getItem("adminKey"); } catch (e) { return null; }
+    }
+    function forget() {
+      try { sessionStorage.removeItem("adminKey"); } catch (e) { /* ignore */ }
+    }
+
+    function api(path, options) {
+      options = options || {};
+      options.headers = Object.assign({ "X-Admin-Key": key }, options.headers || {});
+      return fetch(API_BASE + path, options);
+    }
+
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+
+    function when(iso) {
+      var d = new Date(iso);
+      if (isNaN(d)) return iso;
+      return d.toLocaleString(undefined, {
+        year: "numeric", month: "short", day: "2-digit",
+        hour: "2-digit", minute: "2-digit"
+      });
+    }
+
+    // ---------------------------------------------------------- unlock
+
+    function unlock() {
+      var value = keyInput.value.trim();
+      if (!value) { gateError.textContent = "Paste the key first."; return; }
+
+      key = value;
+      gateError.textContent = "";
+
+      api("/api/admin/leads?limit=1")
+        .then(function (response) {
+          if (response.status === 401) { throw new Error("That key was not accepted."); }
+          if (response.status === 503) { throw new Error("The server has no admin key configured."); }
+          if (!response.ok) { throw new Error("Server returned " + response.status + "."); }
+          remember(key);
+          gate.hidden = true;
+          app.hidden = false;
+          signOut.hidden = false;
+          load();
+        })
+        .catch(function (error) {
+          key = null;
+          gateError.textContent = error.message === "Failed to fetch"
+            ? "Could not reach the API. Is it running?"
+            : error.message;
+        });
+    }
+
+    document.getElementById("unlock").addEventListener("click", unlock);
+    keyInput.addEventListener("keydown", function (e) { if (e.key === "Enter") unlock(); });
+
+    signOut.addEventListener("click", function () {
+      forget();
+      key = null;
+      selectedId = null;
+      detail.hidden = true;
+      app.hidden = true;
+      signOut.hidden = true;
+      gate.hidden = false;
+      keyInput.value = "";
+      keyInput.focus();
+    });
+
+    // ---------------------------------------------------------- list
+
+    function load() {
+      var query = filter.value ? "?status=" + encodeURIComponent(filter.value) : "";
+      conn.textContent = "loading…";
+
+      api("/api/admin/leads" + query)
+        .then(function (r) { return r.json(); })
+        .then(function (page) {
+          conn.textContent = "";
+          countEl.textContent = page.total + (page.total === 1 ? " enquiry" : " enquiries");
+          rows.innerHTML = "";
+          empty.hidden = page.items.length > 0;
+
+          page.items.forEach(function (lead) {
+            var tr = document.createElement("tr");
+            tr.setAttribute("aria-selected", String(lead.id === selectedId));
+            tr.innerHTML =
+              '<td class="mono">' + lead.id + "</td>" +
+              '<td><span class="who">' + escapeHtml(lead.name) + "</span>" +
+                (lead.company ? '<span class="co">' + escapeHtml(lead.company) + "</span>" : "") + "</td>" +
+              '<td class="mono">' + escapeHtml(lead.email) + "</td>" +
+              '<td><span class="pill" data-s="' + lead.status + '">' + lead.status + "</span></td>" +
+              '<td class="mono">' + when(lead.createdAtUtc) + "</td>";
+            tr.addEventListener("click", function () { open(lead.id); });
+            rows.appendChild(tr);
+          });
+        })
+        .catch(function () { conn.textContent = "could not load"; });
+    }
+
+    filter.addEventListener("change", function () { detail.hidden = true; selectedId = null; load(); });
+    document.getElementById("refresh").addEventListener("click", load);
+
+    // ---------------------------------------------------------- detail
+
+    function open(id) {
+      api("/api/admin/leads/" + id)
+        .then(function (r) { return r.json(); })
+        .then(function (lead) {
+          selectedId = lead.id;
+          render(lead);
+          // Opening a New enquiry marks it Read — that is what opening it means.
+          if (lead.status === "New") save(lead.id, { status: "Read" });
+          else load();
+        });
+    }
+
+    function render(lead) {
+      var options = STATUSES.map(function (s) {
+        return '<option value="' + s + '"' + (s === lead.status ? " selected" : "") + ">" + s + "</option>";
+      }).join("");
+
+      detail.hidden = false;
+      detail.innerHTML =
+        "<h2>" + escapeHtml(lead.name) + (lead.company ? " · " + escapeHtml(lead.company) : "") + "</h2>" +
+        '<div class="detail__meta">' +
+          '<span><a href="mailto:' + escapeHtml(lead.email) + '">' + escapeHtml(lead.email) + "</a></span>" +
+          "<span>#" + lead.id + "</span>" +
+          "<span>" + when(lead.createdAtUtc) + "</span>" +
+          (lead.source ? "<span>via " + escapeHtml(lead.source) + "</span>" : "") +
+        "</div>" +
+        '<div class="detail__body">' + escapeHtml(lead.message) + "</div>" +
+        '<div class="detail__row">' +
+          '<div><label class="k" for="d-status">Status</label>' +
+            '<select id="d-status">' + options + "</select></div>" +
+          '<div class="grow"><label class="k" for="d-note">Private note</label>' +
+            '<textarea id="d-note" maxlength="2000" placeholder="What you quoted, what you agreed.">' +
+            escapeHtml(lead.note || "") + "</textarea></div>" +
+        "</div>" +
+        '<div class="detail__row">' +
+          '<button class="btn" id="d-save">Save</button>' +
+          '<a class="btn btn--quiet" style="text-decoration:none" href="mailto:' +
+            escapeHtml(lead.email) + "?subject=" + encodeURIComponent("Re: your enquiry") +
+            '">Reply by email</a>' +
+          '<span class="note" id="d-status-note"></span>' +
+        "</div>";
+
+      document.getElementById("d-save").addEventListener("click", function () {
+        save(lead.id, {
+          status: document.getElementById("d-status").value,
+          note: document.getElementById("d-note").value
+        }, true);
+      });
+
+      detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function save(id, changes, announce) {
+      var note = document.getElementById("d-status-note");
+      if (announce && note) note.textContent = "saving…";
+
+      api("/api/admin/leads/" + id, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(changes)
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error("save failed");
+          return r.json();
+        })
+        .then(function (lead) {
+          // Always re-render the open panel from what the server returned. Skipping this
+          // on the automatic New -> Read leaves the status select showing the stale value,
+          // and the next Save writes it back, undoing the mark.
+          if (lead.id === selectedId) {
+            render(lead);
+            if (announce) {
+              var saved = document.getElementById("d-status-note");
+              if (saved) saved.textContent = "saved";
+            }
+          }
+          load();
+        })
+        .catch(function () { if (note) note.textContent = "could not save"; });
+    }
+
+    // ---------------------------------------------------------- boot
+
+    var saved = recall();
+    if (saved) { keyInput.value = saved; unlock(); }
+    else { keyInput.focus(); }
+  })();
+</script>
+
+</body>
+</html>

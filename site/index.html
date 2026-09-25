@@ -1,0 +1,1370 @@
+<title>AmirHossein Donya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  /* Dark is this site's default identity — lime on near-black is the brand.
+     Light is an explicit opt-in via the toggle, not an OS-preference follow. */
+  :root {
+    --void:      #0B0B0A;
+    --ground:    #101010;
+    --panel:     #171716;
+    --ink:       #F3F3F0;
+    --ink-2:     #A3A39D;
+    --ink-3:     #6E6E68;
+    --rule:      #262624;
+    --rule-2:    #35352F;
+    --volt-ink:  #D9FF3D;   /* accent as text */
+    --volt-fill: #D9FF3D;   /* accent as a block */
+    --on-volt:   #101010;   /* text sitting on that block */
+    --volt-dim:  #A8C62C;
+    --slot-bg:   #15170C;
+    --topbar:    rgba(16, 16, 16, 0.86);
+
+    --display: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  :root[data-theme="light"] {
+    --void:      #0B0B0A;   /* code stays dark in both themes */
+    --ground:    #F2F2EF;
+    --panel:     #FFFFFF;
+    --ink:       #111110;
+    --ink-2:     #56564F;
+    --ink-3:     #87877E;
+    --rule:      #DEDED7;
+    --rule-2:    #C6C6BC;
+    --volt-ink:  #4B6600;   /* lime is illegible on white — deepened for text */
+    --volt-fill: #D9FF3D;   /* the block itself keeps the brand lime */
+    --on-volt:   #101010;
+    --volt-dim:  #8FA832;
+    --slot-bg:   #F8FCE4;
+    --topbar:    rgba(242, 242, 239, 0.86);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+
+  a { color: inherit; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--volt-ink);
+    outline-offset: 3px;
+  }
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-inline: 22px;
+  }
+
+  /* ================= top bar ================= */
+
+  .topbar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: var(--topbar);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* theme toggle */
+
+  .themer {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: none;
+    border: 1px solid var(--rule-2);
+    border-radius: 999px;
+    padding: 4px 11px 4px 9px;
+    cursor: pointer;
+    color: var(--ink-3);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.16s ease, border-color 0.16s ease;
+  }
+
+  .themer:hover { color: var(--ink); border-color: var(--ink-3); }
+
+  .themer svg { width: 13px; height: 13px; display: block; flex: none; }
+
+  .themer .i-sun { display: none; }
+  :root[data-theme="light"] .themer .i-sun  { display: block; }
+  :root[data-theme="light"] .themer .i-moon { display: none; }
+
+  .topbar__right { display: flex; align-items: center; gap: 14px; }
+
+  .topbar__in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding-block: 13px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .topbar__name { color: var(--ink); font-weight: 500; letter-spacing: 0.1em; }
+
+  .live { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); }
+  .live::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--volt-ink); flex: none;
+  }
+
+  @media (max-width: 520px) { .live span { display: none; } }
+
+  /* ================= hero ================= */
+
+  .hero { padding-block: clamp(48px, 9vw, 96px) clamp(40px, 7vw, 72px); }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.9rem, 12.2vw, 8.4rem);
+    font-variation-settings: "wdth" 112;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.855;
+    text-transform: uppercase;
+    margin: clamp(22px, 4vw, 40px) 0 0;
+  }
+
+  h1 .volt { color: var(--volt-ink); }
+
+  /* Entrance: runs once on load and ends visible. Nothing is gated on scroll,
+     so every word is readable even if the animation never fires. */
+
+  @keyframes rise {
+    from { transform: translateY(0.34em); opacity: 0.001; }
+    to   { transform: translateY(0);      opacity: 1; }
+  }
+
+  @keyframes fade {
+    from { opacity: 0.001; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes sweep {
+    from { background-size: 0% 1px; }
+    to   { background-size: 100% 1px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    h1 .ln {
+      display: block;
+      animation: rise 0.62s cubic-bezier(0.16, 0.9, 0.3, 1) both;
+    }
+    h1 .ln:nth-child(1) { animation-delay: 0.04s; }
+    h1 .ln:nth-child(2) { animation-delay: 0.12s; }
+    h1 .ln:nth-child(3) { animation-delay: 0.20s; }
+
+    .hero__meta { animation: fade 0.5s ease both; }
+    .hero__lede { animation: fade 0.6s ease 0.30s both; }
+    .cta        { animation: fade 0.6s ease 0.40s both; }
+
+    .hero__meta {
+      border-bottom-color: transparent;
+      background-image: linear-gradient(var(--volt-ink), var(--volt-ink));
+      background-repeat: no-repeat;
+      background-position: left bottom;
+      animation: fade 0.5s ease both,
+                 sweep 0.9s cubic-bezier(0.16, 0.9, 0.3, 1) 0.12s both;
+    }
+  }
+
+  h1 .ln { display: block; }
+
+  .hero__lede {
+    font-size: clamp(1rem, 1.6vw, 1.1875rem);
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 48ch;
+    margin: clamp(24px, 4vw, 36px) 0 0;
+  }
+
+  .hero__lede strong { color: var(--ink); font-weight: 500; }
+
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--volt-fill);
+    background: var(--volt-fill);
+    color: var(--on-volt);
+    transition: background 0.16s ease, color 0.16s ease;
+  }
+
+  .btn:hover { background: transparent; color: var(--volt-ink); }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--ink-2);
+    border-color: var(--rule-2);
+  }
+
+  .btn--ghost:hover { background: transparent; color: var(--ink); border-color: var(--ink-3); }
+
+  /* ================= section scaffolding ================= */
+
+  section[id] { scroll-margin-top: 70px; }
+
+  .band { border-top: 1px solid var(--rule); padding-block: clamp(44px, 6vw, 72px); }
+
+  .band__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 24px;
+    margin-bottom: clamp(26px, 3.5vw, 40px);
+  }
+
+  .band__title {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--volt-ink);
+    margin: 0;
+  }
+
+  .band__note {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+
+  /* ================= services ================= */
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .svc {
+    background: var(--ground);
+    padding: 26px 24px 28px;
+    position: relative;
+    transition: background 0.2s ease;
+  }
+
+  .svc::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--volt-fill);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.26s cubic-bezier(0.16, 0.9, 0.3, 1);
+  }
+
+  .svc:hover { background: var(--panel); }
+  .svc:hover::after { transform: scaleY(1); }
+
+  .svc__id {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    transition: color 0.2s ease;
+  }
+
+  .svc:hover .svc__id { color: var(--volt-ink); }
+
+  .svc h3 {
+    font-size: 1.3125rem;
+    font-weight: 700;
+    font-variation-settings: "wdth" 104;
+    letter-spacing: -0.02em;
+    line-height: 1.18;
+    margin: 12px 0 10px;
+  }
+
+  .svc p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+
+  .svc__tags {
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+
+  /* ================= stack ================= */
+
+  .stack { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border-block: 1px solid var(--rule); }
+
+  .stack__row {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+    background: var(--ground);
+    padding-block: 15px;
+  }
+
+  .stack__key {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .stack__vals { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-2);
+    border: 1px solid var(--rule-2);
+    border-radius: 999px;
+    padding: 3px 11px;
+    transition: color 0.16s ease, border-color 0.16s ease;
+  }
+
+  .chip:hover { color: var(--volt-ink); border-color: var(--volt-dim); }
+
+  .stack__row { transition: background 0.2s ease; }
+  .stack__row:hover { background: var(--panel); }
+  .stack__row:hover .stack__key { color: var(--ink-2); }
+  .stack__key { transition: color 0.2s ease; }
+
+  @media (max-width: 560px) {
+    .stack__row { grid-template-columns: 1fr; gap: 9px; align-items: start; }
+  }
+
+  /* ================= code ================= */
+
+  .codewrap {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--void);
+  }
+
+  .codewrap__bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    padding: 11px 15px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .codewrap__scroll { overflow-x: auto; }
+
+  pre {
+    margin: 0;
+    padding: 18px 15px 20px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.72;
+    color: #CFD3CB;
+    tab-size: 2;
+  }
+
+  .k { color: var(--volt-fill); }
+  .t { color: #93B8D8; }
+  .s { color: #C3A86B; }
+  .c { color: var(--ink-3); }
+
+  .codenote {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--ink-3);
+    margin: 14px 0 0;
+    max-width: 68ch;
+  }
+
+  /* ================= work slots ================= */
+
+  .work { display: grid; gap: 14px; }
+
+  .slot {
+    border: 1px dashed var(--volt-dim);
+    border-radius: 4px;
+    background: var(--slot-bg);
+    padding: 22px 22px 24px;
+  }
+
+  .slot__tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-volt);
+    background: var(--volt-fill);
+    border-radius: 2px;
+    padding: 3px 9px;
+  }
+
+  .slot h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 14px 0 8px;
+  }
+
+  .slot p { margin: 0; color: var(--ink-2); font-size: 14px; max-width: 64ch; }
+
+  .slot ul { margin: 11px 0 0; padding-left: 17px; color: var(--ink-2); font-size: 13.5px; }
+  .slot li { margin-bottom: 4px; }
+
+  /* ================= terms ================= */
+
+  .terms { border-top: 1px solid var(--rule); }
+
+  .term {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px 24px;
+    align-items: baseline;
+    padding-block: 18px;
+    border-bottom: 1px solid var(--rule);
+    margin-inline: -16px;
+    padding-inline: 16px;
+    transition: background 0.2s ease;
+  }
+
+  .term:hover { background: var(--panel); }
+  .term:hover .term__meta { color: var(--volt-ink); }
+  .term__meta { transition: color 0.2s ease; }
+
+  .term__name {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    font-variation-settings: "wdth" 104;
+    letter-spacing: -0.015em;
+  }
+
+  .term__desc { color: var(--ink-2); font-size: 14px; margin-top: 3px; max-width: 58ch; }
+
+  .term__meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+
+  .term--lead { background: var(--slot-bg); box-shadow: inset 2px 0 0 var(--volt-fill); }
+  .term--lead:hover { background: var(--slot-bg); }
+  .term--lead .term__name { color: var(--volt-ink); }
+
+  @media (max-width: 560px) {
+    .term { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  /* ================= objections ================= */
+
+  .qa { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+
+  .qa__item { background: var(--ground); }
+
+  .qa__q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    text-align: left;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    font-variation-settings: "wdth" 104;
+    letter-spacing: -0.015em;
+    padding: 20px 22px;
+    transition: color 0.16s ease;
+  }
+
+  .qa__q:hover { color: var(--volt-ink); }
+
+  .qa__mark {
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--volt-ink);
+    flex: none;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+
+  .qa__item[open] .qa__mark { transform: rotate(45deg); }
+
+  .qa__q::-webkit-details-marker { display: none; }
+  .qa__q::marker { content: ""; }
+
+  .qa__a {
+    padding: 0 22px 22px;
+    color: var(--ink-2);
+    font-size: 14.5px;
+    max-width: 72ch;
+  }
+
+  .qa__a p { margin: 0 0 10px; }
+  .qa__a p:last-child { margin-bottom: 0; }
+  .qa__a strong { color: var(--ink); font-weight: 500; }
+
+  .qa__fill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-volt);
+    background: var(--volt-fill);
+    border-radius: 2px;
+    padding: 2px 8px;
+    margin-bottom: 8px;
+  }
+
+  /* ================= contact ================= */
+
+  .contact {
+    border-top: 1px solid var(--rule);
+    padding-block: clamp(52px, 8vw, 88px);
+  }
+
+  .contact h2 {
+    font-size: clamp(2rem, 7.5vw, 4.75rem);
+    font-variation-settings: "wdth" 110;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .contact h2 .volt { color: var(--volt-ink); }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 26px 32px;
+    margin-top: 34px;
+  }
+
+  .contact__label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 7px;
+  }
+
+  .contact__val {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-2);
+    padding-bottom: 2px;
+    transition: color 0.16s ease, border-color 0.16s ease;
+    overflow-wrap: anywhere;
+  }
+
+  .contact__val:hover { color: var(--volt-ink); border-color: var(--volt-ink); }
+
+  .contact__pitch {
+    margin-top: 34px;
+    padding: 20px 22px;
+    border-left: 2px solid var(--volt-ink);
+    background: var(--panel);
+    color: var(--ink-2);
+    font-size: 14.5px;
+    max-width: 62ch;
+  }
+
+  .contact__pitch strong { color: var(--volt-ink); font-weight: 500; }
+
+  /* ================= contact form ================= */
+
+  .form {
+    margin-top: 38px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 680px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field--wide { grid-column: 1 / -1; }
+
+  .field label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .field input,
+  .field textarea {
+    font-family: var(--display);
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--rule-2);
+    border-radius: 3px;
+    padding: 11px 13px;
+    width: 100%;
+    transition: border-color 0.16s ease;
+  }
+
+  .field textarea { resize: vertical; min-height: 118px; line-height: 1.55; }
+
+  .field input:hover,
+  .field textarea:hover { border-color: var(--ink-3); }
+
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--volt-ink);
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder { color: var(--ink-3); opacity: 0.7; }
+
+  .field[data-invalid="true"] input,
+  .field[data-invalid="true"] textarea { border-color: #E5484D; }
+
+  .field__error {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: #E5484D;
+    min-height: 0;
+  }
+
+  /* The bot trap. Off-screen rather than display:none — some bots skip hidden inputs. */
+  .trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .form__foot {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 18px;
+  }
+
+  .form button {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid var(--volt-fill);
+    background: var(--volt-fill);
+    color: var(--on-volt);
+    cursor: pointer;
+    transition: background 0.16s ease, color 0.16s ease, opacity 0.16s ease;
+  }
+
+  .form button:hover:not(:disabled) { background: transparent; color: var(--volt-ink); }
+  .form button:disabled { opacity: 0.5; cursor: progress; }
+
+  .form__status {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+
+  .form__status[data-tone="ok"]   { color: var(--volt-ink); }
+  .form__status[data-tone="bad"]  { color: #E5484D; }
+
+  .form__sent {
+    grid-column: 1 / -1;
+    border: 1px solid var(--volt-dim);
+    border-left: 2px solid var(--volt-fill);
+    background: var(--slot-bg);
+    border-radius: 3px;
+    padding: 20px 22px;
+  }
+
+  .form__sent h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
+    color: var(--volt-ink);
+  }
+
+  .form__sent p { margin: 0; color: var(--ink-2); font-size: 14px; }
+
+  @media (max-width: 560px) {
+    .form { grid-template-columns: 1fr; }
+  }
+
+  /* ================= footer ================= */
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-block: 26px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+</style>
+
+<div class="topbar">
+  <div class="shell topbar__in">
+    <span class="topbar__name">AmirHossein Donya</span>
+    <span class="topbar__right">
+      <span class="live">Available <span>— taking contracts</span></span>
+      <button class="themer" id="themeToggle" type="button" aria-label="Switch between dark and light">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <span id="themeLabel">Light</span>
+      </button>
+    </span>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="hero__meta">
+      <span>Backend Developer</span>
+      <span>ASP.NET Core · C# · SQL Server</span>
+      <span>Remote · UTC+3:30</span>
+    </div>
+
+    <h1><span class="ln">Backend</span><span class="ln">that holds</span><span class="ln volt">under load.</span></h1>
+
+    <p class="hero__lede">
+      I build and repair the server side of business software — the APIs, the data model,
+      and the queries underneath them. <strong>Most of my work is the part users never see:</strong>
+      a schema that survives growth, an endpoint that stays fast, a legacy codebase moved
+      onto a version that still gets security patches.
+    </p>
+
+    <div class="cta">
+      <a class="btn" href="mailto:amirhossein13e@gmail.com">Send me a problem</a>
+      <a class="btn btn--ghost" href="#work">See the work</a>
+    </div>
+  </header>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="band" id="services">
+    <div class="band__head">
+      <h2 class="band__title">What I'm hired for</h2>
+      <span class="band__note">Four things, done properly</span>
+    </div>
+
+    <div class="services">
+
+      <article class="svc">
+        <div class="svc__id">01 / API</div>
+        <h3>Backend APIs in ASP.NET Core</h3>
+        <p>
+          REST and minimal APIs with Entity Framework Core: authentication, role-based
+          authorization, validation, background jobs, third-party integrations. Delivered
+          with tests and a README the next developer can actually follow.
+        </p>
+        <p class="svc__tags">.NET 8 · EF Core · Identity · Hangfire</p>
+      </article>
+
+      <article class="svc">
+        <div class="svc__id">02 / DATA</div>
+        <h3>SQL Server design and performance</h3>
+        <p>
+          When a page takes eight seconds to load, it is usually a missing index, a query
+          running once per row, or a report reading a table it should never touch.
+          I find which one it is and fix it.
+        </p>
+        <p class="svc__tags">Execution plans · Indexing · N+1 · Migrations</p>
+      </article>
+
+      <article class="svc">
+        <div class="svc__id">03 / LEGACY</div>
+        <h3>Legacy .NET modernization</h3>
+        <p>
+          Moving applications off .NET Framework and Web Forms onto current .NET, in stages
+          that each ship. The application keeps running for its users while the migration is
+          underway — not a rewrite that lands all at once a year from now.
+        </p>
+        <p class="svc__tags">Framework → Core · Web Forms · Incremental</p>
+      </article>
+
+      <article class="svc">
+        <div class="svc__id">04 / TEAM</div>
+        <h3>Overflow capacity for agencies</h3>
+        <p>
+          Working inside your repository, your branching model and your ticket tracker,
+          reporting to your lead. No contact with your client unless you want it.
+          Weekly invoice, no minimum commitment.
+        </p>
+        <p class="svc__tags">White label · Your process · Your standards</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= STACK ================= -->
+  <section class="band" id="stack">
+    <div class="band__head">
+      <h2 class="band__title">Stack</h2>
+      <span class="band__note">What I use daily, not what I once read about</span>
+    </div>
+
+    <div class="stack">
+      <div class="stack__row">
+        <div class="stack__key">Language</div>
+        <div class="stack__vals">
+          <span class="chip">C#</span><span class="chip">T-SQL</span><span class="chip">JavaScript</span>
+        </div>
+      </div>
+      <div class="stack__row">
+        <div class="stack__key">Framework</div>
+        <div class="stack__vals">
+          <span class="chip">ASP.NET Core</span><span class="chip">EF Core</span><span class="chip">Web API</span><span class="chip">MVC</span><span class="chip">Dapper</span>
+        </div>
+      </div>
+      <div class="stack__row">
+        <div class="stack__key">Data</div>
+        <div class="stack__vals">
+          <span class="chip">SQL Server</span><span class="chip">Stored procedures</span><span class="chip">Query tuning</span><span class="chip">Migrations</span>
+        </div>
+      </div>
+      <div class="stack__row">
+        <div class="stack__key">Frontend</div>
+        <div class="stack__vals">
+          <span class="chip">Razor</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">Bootstrap</span>
+        </div>
+      </div>
+      <div class="stack__row">
+        <div class="stack__key">Tooling</div>
+        <div class="stack__vals">
+          <span class="chip">Git</span><span class="chip">Visual Studio</span><span class="chip">Rider</span><span class="chip">IIS</span><span class="chip">Postman</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CODE ================= -->
+  <section class="band" id="code">
+    <div class="band__head">
+      <h2 class="band__title">How I write it</h2>
+      <span class="band__note">Read it before you email me</span>
+    </div>
+
+    <div class="codewrap">
+      <div class="codewrap__bar">
+        <span>InvoiceEndpoints.cs</span>
+        <span>ASP.NET Core · EF Core</span>
+      </div>
+      <div class="codewrap__scroll">
+<pre><span class="c">// Paged, filtered, projected — one round trip, no tracking overhead.</span>
+app.<span class="t">MapGet</span>(<span class="s">"/api/invoices"</span>, <span class="k">async</span> (
+    <span class="t">AppDbContext</span> db,
+    [<span class="t">AsParameters</span>] <span class="t">InvoiceQuery</span> query,
+    <span class="t">CancellationToken</span> ct) =&gt;
+{
+    <span class="k">var</span> invoices = db.Invoices
+        .<span class="t">AsNoTracking</span>()
+        .<span class="t">Where</span>(i =&gt; i.TenantId == query.TenantId)
+        .<span class="t">Where</span>(i =&gt; query.Status == <span class="k">null</span> || i.Status == query.Status)
+        .<span class="t">OrderByDescending</span>(i =&gt; i.IssuedOn);
+
+    <span class="k">var</span> total = <span class="k">await</span> invoices.<span class="t">CountAsync</span>(ct);
+
+    <span class="k">var</span> page = <span class="k">await</span> invoices
+        .<span class="t">Skip</span>(query.Offset)
+        .<span class="t">Take</span>(query.Limit)
+        .<span class="t">Select</span>(i =&gt; <span class="k">new</span> <span class="t">InvoiceDto</span>(i.Id, i.Number, i.Total, i.Status))
+        .<span class="t">ToListAsync</span>(ct);
+
+    <span class="k">return</span> <span class="t">Results</span>.<span class="t">Ok</span>(<span class="k">new</span> <span class="t">Paged</span>&lt;<span class="t">InvoiceDto</span>&gt;(page, total));
+})
+.<span class="t">WithName</span>(<span class="s">"ListInvoices"</span>)
+.<span class="t">RequireAuthorization</span>();</pre>
+      </div>
+    </div>
+
+    <p class="codenote">
+      // Projection into a DTO so the query selects four columns instead of the whole entity.<br>
+      // Cancellation passed all the way down, so an abandoned request stops work at the database.
+    </p>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section class="band" id="work">
+    <div class="band__head">
+      <h2 class="band__title">Selected work</h2>
+      <span class="band__note">Three is enough — pick the ones with numbers</span>
+    </div>
+
+    <div class="work">
+
+      <article class="slot">
+        <span class="slot__tag">Fill in — project 01</span>
+        <h3>Name the system, not the technology</h3>
+        <p>Describe one project you actually built. Two or three sentences covering:</p>
+        <ul>
+          <li>What the business needed, and what was in the way</li>
+          <li>What you built, in plain language a non-developer understands</li>
+          <li>One measurable outcome — a load time, a user count, hours saved per week</li>
+        </ul>
+      </article>
+
+      <article class="slot">
+        <span class="slot__tag">Fill in — project 02</span>
+        <h3>Pick one that shows the database side</h3>
+        <p>
+          A reporting system, a migration, a performance fix — anything where the interesting
+          work was in the data rather than the screen. If you have a before-and-after number,
+          open with it.
+        </p>
+      </article>
+
+      <article class="slot">
+        <span class="slot__tag">Fill in — project 03</span>
+        <h3>Pick one that proves you finish things</h3>
+        <p>
+          A project that shipped and stayed in use. If you can link a live URL or a public
+          repository, do — one working link outweighs three paragraphs of description.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= ENGAGEMENT ================= -->
+  <section class="band" id="engagement">
+    <div class="band__head">
+      <h2 class="band__title">How we can work</h2>
+      <span class="band__note">Start small if you'd rather</span>
+    </div>
+
+    <div class="terms">
+
+      <div class="term term--lead">
+        <div>
+          <div class="term__name">Paid trial task</div>
+          <div class="term__desc">
+            A small, real piece of work before either of us commits to anything larger.
+            The fastest way to find out whether this fits — and the one I'd suggest first.
+          </div>
+        </div>
+        <div class="term__meta">One-off</div>
+      </div>
+
+      <div class="term">
+        <div>
+          <div class="term__name">Subcontract</div>
+          <div class="term__desc">
+            You hold the client relationship. I take tickets and deliver against your standards.
+          </div>
+        </div>
+        <div class="term__meta">Hourly · weekly invoice</div>
+      </div>
+
+      <div class="term">
+        <div>
+          <div class="term__name">Fixed-scope project</div>
+          <div class="term__desc">
+            A written scope, a delivery date, a fixed price. Half on start, half on delivery.
+          </div>
+        </div>
+        <div class="term__meta">Per project</div>
+      </div>
+
+      <div class="term">
+        <div>
+          <div class="term__name">Maintenance retainer</div>
+          <div class="term__desc">
+            Ongoing fixes, updates and small features on an application that already exists.
+          </div>
+        </div>
+        <div class="term__meta">Monthly</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= OBJECTIONS ================= -->
+  <section class="band" id="questions">
+    <div class="band__head">
+      <h2 class="band__title">Before you ask</h2>
+      <span class="band__note">The five things people want to know</span>
+    </div>
+
+    <div class="qa">
+
+      <details class="qa__item">
+        <summary class="qa__q">Where are you, and does that actually work?<span class="qa__mark">+</span></summary>
+        <div class="qa__a">
+          <p>
+            I work remotely from UTC+3:30. That is <strong>two to three hours ahead of
+            Central European time</strong> and half an hour ahead of the Gulf — so a normal
+            European working day and mine overlap almost completely. Stand-ups, calls and
+            same-day answers are not a problem.
+          </p>
+        </div>
+      </details>
+
+      <details class="qa__item">
+        <summary class="qa__q">How do I know the code is any good?<span class="qa__mark">+</span></summary>
+        <div class="qa__a">
+          <p>
+            You don't yet, and I would not expect you to. That is what the
+            <strong>paid trial task</strong> is for: pick a small, real piece of work, pay for
+            that one thing, and read the pull request. You will know more from one PR than from
+            any amount of this page.
+          </p>
+          <p>
+            Everything is committed to your repository as we go. There is no point at which
+            I hold the work.
+          </p>
+        </div>
+      </details>
+
+      <details class="qa__item">
+        <summary class="qa__q">What is communication like?<span class="qa__mark">+</span></summary>
+        <div class="qa__a">
+          <p>
+            Written English, async first. <strong>A short written update at the end of every
+            working day</strong> — what moved, what is blocked, what is next — so you never have
+            to ask where things are. Calls when they are faster than typing, not on a schedule
+            for their own sake.
+          </p>
+        </div>
+      </details>
+
+      <details class="qa__item">
+        <summary class="qa__q">Who owns the code, and what about an NDA?<span class="qa__mark">+</span></summary>
+        <div class="qa__a">
+          <p>
+            <strong>You own everything from the first commit.</strong> I keep no rights to work
+            you have paid for and I will not show it anywhere without your written say-so.
+            I'll sign your NDA — send it with the first email if you'd rather have it in place
+            before we talk specifics.
+          </p>
+        </div>
+      </details>
+
+      <details class="qa__item">
+        <summary class="qa__q">How does invoicing and payment work?<span class="qa__mark">+</span></summary>
+        <div class="qa__a">
+          <p class="qa__fill">Fill in — answer this honestly</p>
+          <p>
+            Replace this with the payment methods you can genuinely accept, and say it plainly.
+            A client who knows up front is a client who does not disappear halfway through the
+            project. State the invoicing rhythm too — weekly for hourly work, half-and-half for
+            fixed scope.
+          </p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contact">
+    <h2>Tell me what's<br><span class="volt">breaking.</span></h2>
+
+    <div class="contact__grid">
+      <div>
+        <p class="contact__label">Email</p>
+        <a class="contact__val" href="mailto:amirhossein13e@gmail.com">amirhossein13e@gmail.com</a>
+      </div>
+      <div>
+        <p class="contact__label">GitHub</p>
+        <a class="contact__val" href="https://github.com/Amir-pce" rel="noopener">github.com/Amir-pce</a>
+      </div>
+      <div>
+        <p class="contact__label">Time zone</p>
+        <span class="contact__val">UTC+3:30 — overlaps CET</span>
+      </div>
+    </div>
+
+    <p class="contact__pitch">
+      If you already have an application and something specific is wrong with it, send the
+      details — the error, the slow page, the query. I'll tell you what I think is causing it
+      before we discuss working together. <strong>Replies inside one working day.</strong>
+    </p>
+
+    <form class="form" id="contactForm" novalidate>
+      <div class="field" id="field-name">
+        <label for="f-name">Your name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required
+               minlength="2" maxlength="120" placeholder="Lukas Meyer">
+        <span class="field__error" id="err-name"></span>
+      </div>
+
+      <div class="field" id="field-email">
+        <label for="f-email">Email</label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required
+               maxlength="254" placeholder="you@company.com">
+        <span class="field__error" id="err-email"></span>
+      </div>
+
+      <div class="field field--wide" id="field-company">
+        <label for="f-company">Company <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input id="f-company" name="company" type="text" autocomplete="organization"
+               maxlength="160" placeholder="Northbyte GmbH">
+        <span class="field__error" id="err-company"></span>
+      </div>
+
+      <div class="field field--wide" id="field-message">
+        <label for="f-message">What's the problem?</label>
+        <textarea id="f-message" name="message" required minlength="10" maxlength="4000"
+                  placeholder="We have a .NET Framework 4.8 app that needs moving to .NET 8. Roughly 60 screens, SQL Server backend."></textarea>
+        <span class="field__error" id="err-message"></span>
+      </div>
+
+      <!-- Left empty by a person; bots fill every input they find. -->
+      <div class="trap" aria-hidden="true">
+        <label for="f-website">Leave this field empty</label>
+        <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="form__foot">
+        <button type="submit" id="formSubmit">Send it</button>
+        <span class="form__status" id="formStatus" role="status" aria-live="polite"></span>
+      </div>
+    </form>
+  </section>
+
+  <footer>
+    <span>AmirHossein Donya · Backend Developer</span>
+    <span>Open to remote contracts · Europe &amp; Gulf</span>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById("themeToggle");
+    var label = document.getElementById("themeLabel");
+
+    // The site is dark by default; a stored choice is the only thing that changes it.
+    function read() {
+      try { return localStorage.getItem("theme"); } catch (e) { return null; }
+    }
+
+    function write(value) {
+      try { localStorage.setItem("theme", value); } catch (e) { /* private mode */ }
+    }
+
+    function apply(theme) {
+      if (theme === "light") {
+        root.setAttribute("data-theme", "light");
+        if (label) label.textContent = "Dark";
+      } else {
+        root.removeAttribute("data-theme");
+        if (label) label.textContent = "Light";
+      }
+    }
+
+    apply(read() === "light" ? "light" : "dark");
+
+    if (btn) {
+      btn.addEventListener("click", function () {
+        var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+        apply(next);
+        write(next);
+      });
+    }
+  })();
+</script>
+
+<script>
+  // Contact form. Posts to the API; the server validates everything again, so this is
+  // only here to catch mistakes before a round trip and to show what came back.
+  (function () {
+    // In production the site and the API share an origin, so requests go to /api/...
+    // on this host. When the page is opened from a local static server it is on a
+    // different port than the API, so point at the API's dev port instead.
+    var API_BASE = window.API_BASE !== undefined
+      ? window.API_BASE
+      : (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && location.port !== "5223"
+          ? "http://localhost:5223"
+          : "");
+
+    var form = document.getElementById("contactForm");
+    if (!form) return;
+
+    var button = document.getElementById("formSubmit");
+    var status = document.getElementById("formStatus");
+
+    var FIELDS = ["name", "email", "company", "message"];
+
+    function setError(field, message) {
+      var wrap = document.getElementById("field-" + field);
+      var slot = document.getElementById("err-" + field);
+      if (slot) slot.textContent = message || "";
+      if (wrap) {
+        if (message) wrap.setAttribute("data-invalid", "true");
+        else wrap.removeAttribute("data-invalid");
+      }
+    }
+
+    function clearErrors() {
+      FIELDS.forEach(function (f) { setError(f, ""); });
+    }
+
+    function say(message, tone) {
+      status.textContent = message || "";
+      if (tone) status.setAttribute("data-tone", tone);
+      else status.removeAttribute("data-tone");
+    }
+
+    function checkLocally(values) {
+      var problems = {};
+      if (values.name.length < 2) problems.name = "At least 2 characters.";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) problems.email = "That does not look like an email address.";
+      if (values.message.length < 10) problems.message = "Tell me a little more — at least 10 characters.";
+      return problems;
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      clearErrors();
+
+      var values = {
+        name: form.elements.name.value.trim(),
+        email: form.elements.email.value.trim(),
+        company: form.elements.company.value.trim(),
+        message: form.elements.message.value.trim(),
+        website: form.elements.website.value,
+        source: "contact-form"
+      };
+
+      var problems = checkLocally(values);
+      var names = Object.keys(problems);
+      if (names.length) {
+        names.forEach(function (f) { setError(f, problems[f]); });
+        say("Check the fields above.", "bad");
+        var firstBad = document.getElementById("f-" + names[0]);
+        if (firstBad) firstBad.focus();
+        return;
+      }
+
+      button.disabled = true;
+      say("Sending…");
+
+      fetch(API_BASE + "/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values)
+      })
+        .then(function (response) {
+          return response.json().catch(function () { return {}; })
+            .then(function (payload) { return { response: response, payload: payload }; });
+        })
+        .then(function (result) {
+          var response = result.response;
+          var payload = result.payload;
+
+          if (response.ok || response.status === 202) {
+            form.innerHTML =
+              '<div class="form__sent">' +
+              "<h3>Got it.</h3>" +
+              "<p>Your message is with me. I reply inside one working day — " +
+              "if you don't hear back, it is worth checking your spam folder.</p>" +
+              "</div>";
+            return;
+          }
+
+          // The API returns RFC 9457 problem details; 400 carries per-field errors.
+          if (response.status === 400 && payload.errors) {
+            Object.keys(payload.errors).forEach(function (key) {
+              var field = key.charAt(0).toLowerCase() + key.slice(1);
+              if (FIELDS.indexOf(field) !== -1) setError(field, payload.errors[key][0]);
+            });
+            say("Check the fields above.", "bad");
+            return;
+          }
+
+          if (response.status === 429) {
+            say(payload.detail || "Too many attempts. Give it a minute.", "bad");
+            return;
+          }
+
+          say("Something went wrong at my end. Email me directly instead.", "bad");
+        })
+        .catch(function () {
+          say("Could not reach the server. Email me directly instead.", "bad");
+        })
+        .then(function () {
+          if (button.isConnected) button.disabled = false;
+        });
+    });
+  })();
+</script>

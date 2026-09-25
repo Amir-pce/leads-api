@@ -1,0 +1,551 @@
+<title>Four Portfolio Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap">
+<style>
+  :root {
+    --bg:       #EFEFEC;
+    --panel:    #FFFFFF;
+    --ink:      #16171A;
+    --ink-2:    #5F6165;
+    --ink-3:    #92959A;
+    --rule:     #D8D8D3;
+    --mark:     #1F4E46;
+    --mark-bg:  #E2EBE8;
+
+    --sans:  "Archivo", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --serif: "Newsreader", ui-serif, Georgia, serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:      #131416;
+      --panel:   #1A1C1F;
+      --ink:     #ECEDEE;
+      --ink-2:   #9EA2A8;
+      --ink-3:   #71757B;
+      --rule:    #2A2D31;
+      --mark:    #7FC4B4;
+      --mark-bg: #16241F;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:      #131416;
+    --panel:   #1A1C1F;
+    --ink:     #ECEDEE;
+    --ink-2:   #9EA2A8;
+    --ink-3:   #71757B;
+    --rule:    #2A2D31;
+    --mark:    #7FC4B4;
+    --mark-bg: #16241F;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 56px 80px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .intro {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 60ch;
+    margin: 18px 0 0;
+  }
+
+  .found {
+    margin-top: 34px;
+    padding: 18px 20px;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--mark);
+    background: var(--panel);
+    border-radius: 2px;
+  }
+
+  .found p { margin: 0; color: var(--ink-2); font-size: 14px; max-width: 70ch; }
+  .found strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- direction block ---------- */
+
+  .dir { margin-top: 52px; }
+
+  .dir__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 18px;
+  }
+
+  .dir__key {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--mark);
+    background: var(--mark-bg);
+    border-radius: 2px;
+    padding: 2px 8px;
+  }
+
+  .dir__name {
+    font-size: 1.375rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .dir__gist { color: var(--ink-3); font-size: 14px; margin: 0; }
+
+  .dir__notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 8px 26px;
+    margin-top: 16px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+  }
+
+  .dir__notes div { display: flex; gap: 9px; }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    flex: none;
+    padding-top: 3px;
+  }
+
+  /* ---------- mockup frame ---------- */
+
+  .frame {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .frame__bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); flex: none; }
+
+  .frame__url {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-left: 6px;
+  }
+
+  .stage { overflow-x: auto; }
+  .stage > * { min-width: 560px; }
+
+  /* ============ A · THE RAIL ============ */
+
+  .m-rail {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    background: #0B1220;
+    color: #C9D4E4;
+    font-family: var(--sans);
+    padding: 34px 30px;
+    gap: 30px;
+  }
+
+  .m-rail h2 { font-size: 30px; font-weight: 600; color: #EAF0F8; margin: 0; letter-spacing: -0.02em; line-height: 1.1; }
+  .m-rail .r-role { color: #EAF0F8; font-size: 14px; font-weight: 500; margin: 7px 0 0; }
+  .m-rail .r-sub { color: #7E8DA3; font-size: 12.5px; margin: 10px 0 0; max-width: 26ch; line-height: 1.5; }
+  .m-rail nav { margin-top: 26px; display: flex; flex-direction: column; gap: 10px; }
+  .m-rail nav span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: #5E6E85; display: flex; align-items: center; gap: 10px; }
+  .m-rail nav span::before { content: ""; width: 20px; height: 1px; background: #33425A; }
+  .m-rail nav span.on { color: #DCE6F2; }
+  .m-rail nav span.on::before { width: 36px; background: #DCE6F2; }
+  .m-rail .r-body { font-size: 12.5px; line-height: 1.75; color: #94A3B8; }
+  .m-rail .r-body b { color: #E4EBF4; font-weight: 500; }
+  .m-rail .r-item { margin-top: 16px; display: grid; grid-template-columns: 62px 1fr; gap: 12px; }
+  .m-rail .r-yr { font-family: var(--mono); font-size: 10.5px; color: #5E6E85; padding-top: 3px; }
+  .m-rail .r-ttl { font-size: 12.5px; color: #E4EBF4; font-weight: 500; }
+  .m-rail .r-dsc { font-size: 11.5px; color: #7E8DA3; line-height: 1.55; }
+
+  /* ============ B · THE TERMINAL ============ */
+
+  .m-term {
+    background: #0A0C0B;
+    color: #B6C2B8;
+    font-family: var(--mono);
+    padding: 32px 30px 36px;
+    font-size: 12.5px;
+    line-height: 1.85;
+  }
+
+  .m-term .t-prompt { color: #4E5C52; }
+  .m-term .t-cmd { color: #9FE8A8; }
+  .m-term h2 {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 500;
+    color: #ECF3ED;
+    letter-spacing: -0.02em;
+    margin: 16px 0 0;
+  }
+  .m-term .t-role { color: #9FE8A8; margin: 4px 0 0; font-size: 13px; }
+  .m-term .t-rule { height: 1px; background: #1E2622; margin: 20px 0; }
+  .m-term .t-grid { display: grid; grid-template-columns: 96px 1fr; gap: 6px 16px; }
+  .m-term .t-k { color: #4E5C52; }
+  .m-term .t-v { color: #C8D4CA; }
+  .m-term .t-block { color: #7E8C81; margin-top: 18px; max-width: 58ch; }
+  .m-term .t-cursor { display: inline-block; width: 7px; height: 14px; background: #9FE8A8; vertical-align: -2px; }
+
+  /* ============ C · THE EDITORIAL ============ */
+
+  .m-edit {
+    background: #FBFAF7;
+    color: #1B1A17;
+    font-family: var(--serif);
+    padding: 40px 34px 44px;
+  }
+
+  .m-edit .e-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9A948A;
+    border-bottom: 1px solid #E3DFD6;
+    padding-bottom: 12px;
+  }
+  .m-edit h2 {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    margin: 26px 0 0;
+    max-width: 16ch;
+  }
+  .m-edit h2 em { font-style: italic; color: #7A6A52; }
+  .m-edit .e-lede { font-size: 15px; line-height: 1.65; color: #4A463F; max-width: 54ch; margin: 18px 0 0; }
+  .m-edit .e-meta {
+    display: flex; flex-wrap: wrap; gap: 8px 26px;
+    font-family: var(--mono); font-size: 11px; color: #8A8478;
+    margin-top: 28px; padding-top: 16px; border-top: 1px solid #E3DFD6;
+  }
+
+  /* ============ D · THE STATEMENT ============ */
+
+  .m-bold {
+    background: #111111;
+    color: #F2F2F2;
+    font-family: var(--sans);
+    padding: 34px 30px 38px;
+  }
+
+  .m-bold .b-top {
+    display: flex; justify-content: space-between; gap: 14px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #6E6E6E;
+  }
+  .m-bold h2 {
+    font-size: 58px;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+    margin: 22px 0 0;
+    text-transform: uppercase;
+  }
+  .m-bold h2 span { color: #D9FF3D; }
+  .m-bold .b-lede { font-size: 13.5px; line-height: 1.6; color: #A6A6A6; max-width: 46ch; margin: 20px 0 0; }
+  .m-bold .b-strip {
+    display: flex; flex-wrap: wrap; gap: 7px; margin-top: 24px;
+  }
+  .m-bold .b-chip {
+    font-family: var(--mono); font-size: 11px; color: #111;
+    background: #D9FF3D; padding: 3px 10px; border-radius: 999px;
+  }
+  .m-bold .b-chip--o { background: transparent; color: #8A8A8A; border: 1px solid #333; }
+
+  /* ---------- closing ---------- */
+
+  .pick {
+    margin-top: 56px;
+    padding: 24px 22px;
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    border-radius: 3px;
+  }
+
+  .pick h2 { font-size: 1.25rem; font-weight: 600; margin: 0 0 10px; letter-spacing: -0.02em; }
+  .pick p { margin: 0 0 12px; color: var(--ink-2); font-size: 14px; max-width: 68ch; }
+  .pick p:last-child { margin-bottom: 0; }
+  .pick code {
+    font-family: var(--mono); font-size: 13px;
+    background: var(--mark-bg); color: var(--mark);
+    padding: 1px 6px; border-radius: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .m-rail { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <p class="eyebrow">Visual direction · Amirhossein</p>
+  <h1>Four Portfolio Directions</h1>
+  <p class="intro">
+    Four different ways your site could look, each built with your real name, stack and
+    positioning so you are choosing between finished feelings rather than descriptions.
+    Pick one and I build it out in full.
+  </p>
+
+  <div class="found">
+    <p>
+      <strong>What the research showed.</strong> Pinterest and Dribbble both gate their
+      search after a few results, but what was visible pointed the same way: the dominant
+      developer-portfolio look right now is a dark page, a photo of the developer, a neon
+      accent and a headline like "Hi, I'm Alex — I build things for the web." It is a crowded
+      genre. An agency lead who reviews contractors sees that exact page all day, which is an
+      argument for looking like none of them.
+    </p>
+  </div>
+
+  <!-- ============ A ============ -->
+  <section class="dir">
+    <div class="dir__head">
+      <span class="dir__key">A</span>
+      <h2 class="dir__name">The Rail</h2>
+      <p class="dir__gist">Fixed left column, content scrolls beside it</p>
+    </div>
+
+    <div class="frame">
+      <div class="frame__bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="frame__url">amirhossein.dev</span></div>
+      <div class="stage">
+        <div class="m-rail">
+          <div>
+            <h2>Amirhossein</h2>
+            <p class="r-role">Backend Developer</p>
+            <p class="r-sub">I build the APIs and the data model underneath business software.</p>
+            <nav>
+              <span class="on">ABOUT</span>
+              <span>SERVICES</span>
+              <span>WORK</span>
+              <span>CONTACT</span>
+            </nav>
+          </div>
+          <div class="r-body">
+            Most of my work is the part users never see: a schema that holds up as the table
+            grows, an endpoint that stays fast under load, a <b>legacy codebase</b> moved onto
+            a version that still gets security patches.
+            <div class="r-item">
+              <div class="r-yr">NOW</div>
+              <div>
+                <div class="r-ttl">ASP.NET Core · SQL Server</div>
+                <div class="r-dsc">Contract backend work for agencies in Europe and the Gulf.</div>
+              </div>
+            </div>
+            <div class="r-item">
+              <div class="r-yr">SPEC</div>
+              <div>
+                <div class="r-ttl">Query tuning &amp; migrations</div>
+                <div class="r-dsc">Execution plans, indexing, N+1 elimination.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dir__notes">
+      <div><span class="tag">Says</span><span>Careful, senior, organised.</span></div>
+      <div><span class="tag">Risk</span><span>The most copied dev layout on the internet.</span></div>
+      <div><span class="tag">Fit</span><span>Safe. Nobody is impressed, nobody objects.</span></div>
+    </div>
+  </section>
+
+  <!-- ============ B ============ -->
+  <section class="dir">
+    <div class="dir__head">
+      <span class="dir__key">B</span>
+      <h2 class="dir__name">The Terminal</h2>
+      <p class="dir__gist">Monospace throughout, structured like a developer tool</p>
+    </div>
+
+    <div class="frame">
+      <div class="frame__bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="frame__url">amirhossein.dev</span></div>
+      <div class="stage">
+        <div class="m-term">
+          <div><span class="t-prompt">$</span> <span class="t-cmd">whois amirhossein</span></div>
+          <h2>Amirhossein</h2>
+          <p class="t-role">ASP.NET Core · C# · SQL Server</p>
+          <div class="t-rule"></div>
+          <div class="t-grid">
+            <div class="t-k">role</div><div class="t-v">Backend developer, contract</div>
+            <div class="t-k">stack</div><div class="t-v">.NET 8, EF Core, T-SQL, Dapper</div>
+            <div class="t-k">focus</div><div class="t-v">APIs, query performance, migrations</div>
+            <div class="t-k">timezone</div><div class="t-v">UTC+3:30 · overlaps EU &amp; Gulf</div>
+            <div class="t-k">status</div><div class="t-v">available — taking new contracts</div>
+          </div>
+          <p class="t-block">
+            // The interesting work is rarely on the screen. It is the index that was
+            // missing, the query running once per row, the report reading a table it
+            // should never touch.
+          </p>
+          <div style="margin-top:18px"><span class="t-prompt">$</span> <span class="t-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dir__notes">
+      <div><span class="tag">Says</span><span>I am an engineer, not a designer who codes.</span></div>
+      <div><span class="tag">Risk</span><span>Gimmicky if the terminal metaphor is pushed too far.</span></div>
+      <div><span class="tag">Fit</span><span>Strong — matches your stack exactly.</span></div>
+    </div>
+  </section>
+
+  <!-- ============ C ============ -->
+  <section class="dir">
+    <div class="dir__head">
+      <span class="dir__key">C</span>
+      <h2 class="dir__name">The Editorial</h2>
+      <p class="dir__gist">Serif, light, almost no interface at all</p>
+    </div>
+
+    <div class="frame">
+      <div class="frame__bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="frame__url">amirhossein.dev</span></div>
+      <div class="stage">
+        <div class="m-edit">
+          <div class="e-top">
+            <span>Amirhossein</span>
+            <span>Backend · Contract · Remote</span>
+          </div>
+          <h2>I make slow software <em>fast</em>, and old software <em>maintainable</em>.</h2>
+          <p class="e-lede">
+            Fifteen years of business applications are running on .NET Framework right now,
+            holding real companies together and quietly going out of support. Moving them
+            forward without stopping the business is specific work, and it is the work I do.
+          </p>
+          <div class="e-meta">
+            <span>ASP.NET CORE</span>
+            <span>SQL SERVER</span>
+            <span>EF CORE</span>
+            <span>T-SQL</span>
+            <span>AVAILABLE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dir__notes">
+      <div><span class="tag">Says</span><span>Confident enough not to decorate.</span></div>
+      <div><span class="tag">Risk</span><span>Lives or dies on the writing.</span></div>
+      <div><span class="tag">Fit</span><span>Best if you want to look expensive.</span></div>
+    </div>
+  </section>
+
+  <!-- ============ D ============ -->
+  <section class="dir">
+    <div class="dir__head">
+      <span class="dir__key">D</span>
+      <h2 class="dir__name">The Statement</h2>
+      <p class="dir__gist">Oversized type, one hard accent, nothing else</p>
+    </div>
+
+    <div class="frame">
+      <div class="frame__bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="frame__url">amirhossein.dev</span></div>
+      <div class="stage">
+        <div class="m-bold">
+          <div class="b-top">
+            <span>Amirhossein</span>
+            <span>Available — 2026</span>
+          </div>
+          <h2>Backend<br>that holds<br><span>under load.</span></h2>
+          <p class="b-lede">
+            ASP.NET Core and SQL Server. APIs, data models, and the query tuning that stops
+            a dashboard taking eight seconds to open.
+          </p>
+          <div class="b-strip">
+            <span class="b-chip">Hire for a paid trial task</span>
+            <span class="b-chip--o b-chip">Subcontract</span>
+            <span class="b-chip--o b-chip">Fixed scope</span>
+            <span class="b-chip--o b-chip">Retainer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dir__notes">
+      <div><span class="tag">Says</span><span>Memorable in a crowded inbox.</span></div>
+      <div><span class="tag">Risk</span><span>Can read as designer, not backend engineer.</span></div>
+      <div><span class="tag">Fit</span><span>Boldest, and the furthest from your buyer.</span></div>
+    </div>
+  </section>
+
+  <div class="pick">
+    <h2>My recommendation</h2>
+    <p>
+      <strong>B, the Terminal</strong> — with the metaphor kept quiet. Your buyer is a technical
+      lead at a small agency who is scanning for whether you can be trusted with their backend.
+      A page that reads like a developer tool answers that question before they finish the first
+      screen, and it is the one direction here that nobody can mistake for a frontend portfolio.
+    </p>
+    <p>
+      If you would rather charge more than look technical, <strong>C</strong> is the stronger
+      play — but it needs real writing, and that means giving me the true details of two or
+      three projects you have finished.
+    </p>
+    <p>
+      Reply with <code>A</code>, <code>B</code>, <code>C</code> or <code>D</code> — or say which
+      parts of two you want combined, which is usually the better answer.
+    </p>
+  </div>
+
+</div>
