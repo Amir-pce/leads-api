@@ -465,6 +465,95 @@
   .slot ul { margin: 11px 0 0; padding-left: 17px; color: var(--ink-2); font-size: 13.5px; }
   .slot li { margin-bottom: 4px; }
 
+  /* a written-up case, as opposed to an empty slot */
+
+  .case {
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--volt-fill);
+    border-radius: 4px;
+    background: var(--panel);
+    padding: 24px 24px 26px;
+  }
+
+  .case__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 20px;
+    margin-bottom: 12px;
+  }
+
+  .case h3 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    font-variation-settings: "wdth" 104;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .case__link {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--volt-ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    overflow-wrap: anywhere;
+    transition: border-color 0.16s ease;
+  }
+
+  .case__link:hover { border-bottom-color: var(--volt-ink); }
+
+  .case__lede {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 14.5px;
+    max-width: 68ch;
+  }
+
+  .case__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 18px 28px;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+
+  .case__k {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 5px;
+  }
+
+  .case__facts code {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--ground);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 1px 5px;
+    overflow-wrap: anywhere;
+  }
+
+  .case__note {
+    margin: 20px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-size: 13.5px;
+    color: var(--ink-3);
+    max-width: 72ch;
+  }
+
   /* ================= terms ================= */
 
   .terms { border-top: 1px solid var(--rule); }
@@ -965,20 +1054,63 @@ app.<span class="t">MapGet</span>(<span class="s">"/api/invoices"</span>, <span 
   <section class="band" id="work">
     <div class="band__head">
       <h2 class="band__title">Selected work</h2>
-      <span class="band__note">Three is enough — pick the ones with numbers</span>
+      <span class="band__note">One written up, two to go</span>
     </div>
 
     <div class="work">
 
-      <article class="slot">
-        <span class="slot__tag">Fill in — project 01</span>
-        <h3>Name the system, not the technology</h3>
-        <p>Describe one project you actually built. Two or three sentences covering:</p>
-        <ul>
-          <li>What the business needed, and what was in the way</li>
-          <li>What you built, in plain language a non-developer understands</li>
-          <li>One measurable outcome — a load time, a user count, hours saved per week</li>
-        </ul>
+      <article class="case">
+        <div class="case__head">
+          <h3>Leads API</h3>
+          <a class="case__link" href="https://github.com/Amir-pce/leads-api" rel="noopener">
+            github.com/Amir-pce/leads-api
+          </a>
+        </div>
+
+        <p class="case__lede">
+          The contact form further down this page is not a mailto link. It posts to an
+          ASP.NET Core API that validates the enquiry, stores it in SQL Server, and hands
+          it to an admin page where I read it, mark where it has got to, and keep a private
+          note against it. I built it because a form that only sends an email loses track of
+          everything the moment the email is read.
+        </p>
+
+        <div class="case__facts">
+          <div>
+            <span class="case__k">Spam handling</span>
+            Four layers, cheapest first: a hidden honeypot field, five attempts per minute
+            per address, a two-minute duplicate window, then field validation. A filled
+            honeypot is answered 202 and stored nowhere — telling a bot it failed only makes
+            it retry with the field cleared.
+          </div>
+          <div>
+            <span class="case__k">Senders, not addresses</span>
+            The duplicate check needs to recognise one sender flooding the form. It stores a
+            SHA-256 of the IP rather than the address, which is enough to spot a flood and is
+            not personal data sitting on disk.
+          </div>
+          <div>
+            <span class="case__k">Two indexes, both composite</span>
+            <code>(Status, CreatedAtUtc DESC)</code> serves the admin list, which is always
+            newest-first and often filtered — one index covers the filtered and unfiltered
+            read with no sort in the plan. <code>(SenderHash, CreatedAtUtc DESC)</code> serves
+            the duplicate check.
+          </div>
+          <div>
+            <span class="case__k">Admin access</span>
+            A shared key compared in constant time, so a wrong guess leaks nothing about how
+            much of it was right. An unconfigured key returns 503 — it locks the admin API
+            rather than opening it.
+          </div>
+        </div>
+
+        <p class="case__note">
+          Twelve end-to-end cases assert the status code of every path, the rejections as
+          well as the successes. Four of them exist because the first version failed them:
+          the validation attributes were inert until minimal-API validation was switched on,
+          paging threw when the query string was absent, enum values travelled as bare
+          integers, and the error handler was reporting every bad request as a server fault.
+        </p>
       </article>
 
       <article class="slot">
