@@ -1054,7 +1054,7 @@ app.<span class="t">MapGet</span>(<span class="s">"/api/invoices"</span>, <span 
   <section class="band" id="work">
     <div class="band__head">
       <h2 class="band__title">Selected work</h2>
-      <span class="band__note">One written up, two to go</span>
+      <span class="band__note">Three projects, each with its code public</span>
     </div>
 
     <div class="work">
@@ -1113,23 +1113,90 @@ app.<span class="t">MapGet</span>(<span class="s">"/api/invoices"</span>, <span 
         </p>
       </article>
 
-      <article class="slot">
-        <span class="slot__tag">Fill in — project 02</span>
-        <h3>Pick one that shows the database side</h3>
-        <p>
-          A reporting system, a migration, a performance fix — anything where the interesting
-          work was in the data rather than the screen. If you have a before-and-after number,
-          open with it.
+      <article class="case">
+        <div class="case__head">
+          <h3>SQL Server performance lab</h3>
+          <a class="case__link" href="https://github.com/Amir-pce/sql-performance-lab" rel="noopener">
+            github.com/Amir-pce/sql-performance-lab
+          </a>
+        </div>
+
+        <p class="case__lede">
+          Five query patterns that turn up in real ASP.NET applications, each one measured
+          rather than described. The harness seeds 1.6 million rows, runs the slow version,
+          applies the fix, and runs it again. Every number in the README is produced by the
+          run.
         </p>
+
+        <div class="case__facts">
+          <div>
+            <span class="case__k">Measured, not asserted</span>
+            Non-SARGable predicate <strong>254 ms → 16 ms</strong>. Implicit conversion
+            <strong>16 ms → under 1 ms</strong>. A sort with no supporting index
+            <strong>1,828 logical reads → 4</strong>.
+          </div>
+          <div>
+            <span class="case__k">The case that backfires</span>
+            A covering index cuts logical reads from 8,666 to 1,834 and makes the query
+            <strong>seven times slower</strong>. The scan it replaced was running in
+            parallel; the seek runs on one core. Kept in rather than tuned until it
+            looked good.
+          </div>
+          <div>
+            <span class="case__k">Honest measurement</span>
+            Cold caches, median of five, and both clocks inside the batch — measured from
+            the client, a four-logical-read query reported 78 ms. CPU comes from
+            <code>sys.dm_exec_requests</code>, because <code>SET STATISTICS TIME</code>
+            reported zero against queries that were plainly working.
+          </div>
+          <div>
+            <span class="case__k">One case at a time</span>
+            Indexes are dropped between cases. Without that, the sort case was quietly
+            measuring an index an earlier case had left behind.
+          </div>
+        </div>
       </article>
 
-      <article class="slot">
-        <span class="slot__tag">Fill in — project 03</span>
-        <h3>Pick one that proves you finish things</h3>
-        <p>
-          A project that shipped and stayed in use. If you can link a live URL or a public
-          repository, do — one working link outweighs three paragraphs of description.
+      <article class="case">
+        <div class="case__head">
+          <h3>Incremental .NET migration</h3>
+          <a class="case__link" href="https://github.com/Amir-pce/legacy-dotnet-migration" rel="noopener">
+            github.com/Amir-pce/legacy-dotnet-migration
+          </a>
+        </div>
+
+        <p class="case__lede">
+          A .NET Framework 4.8 service and a .NET 10 application serving one API together,
+          with routes moving across one at a time. Both run at once and a caller cannot tell
+          which routes have moved. This is how an application a business depends on gets
+          modernised without a rewrite that lands all at once a year later.
         </p>
+
+        <div class="case__facts">
+          <div>
+            <span class="case__k">Genuinely legacy</span>
+            The old side targets <code>net48</code>, which pins the compiler to C# 7.3 —
+            no records, no top-level statements, no nullable reference types. Web API 2 on
+            OWIN, synchronous ADO.NET straight from the controllers.
+          </div>
+          <div>
+            <span class="case__k">Routes move, the database does not</span>
+            YARP forwards anything not yet claimed. The catch-all is registered last, so a
+            migrated route always wins and moving the next one is a three-line change.
+            Both applications read the same tables throughout.
+          </div>
+          <div>
+            <span class="case__k">Reversible by design</span>
+            Deleting the old code is a separate step, taken later. Nothing depends on it,
+            so a route that misbehaves in production is reverted by removing one handler.
+          </div>
+          <div>
+            <span class="case__k">Proved, not assumed</span>
+            A parity test calls every route on both sides and compares status and body.
+            <strong>Eight routes, identical</strong> — including the empty-bodied 404,
+            because a client treating that as "no such product" has to keep working.
+          </div>
+        </div>
       </article>
 
     </div>
@@ -1252,12 +1319,14 @@ app.<span class="t">MapGet</span>(<span class="s">"/api/invoices"</span>, <span 
       <details class="qa__item">
         <summary class="qa__q">How does invoicing and payment work?<span class="qa__mark">+</span></summary>
         <div class="qa__a">
-          <p class="qa__fill">Fill in — answer this honestly</p>
           <p>
-            Replace this with the payment methods you can genuinely accept, and say it plainly.
-            A client who knows up front is a client who does not disappear halfway through the
-            project. State the invoicing rhythm too — weekly for hourly work, half-and-half for
-            fixed scope.
+            <strong>A numbered invoice, same as anyone else.</strong> What differs is the rail:
+            settlement is in USDC or USDT, which arrives the same day and costs almost nothing
+            in fees. Your accounts team gets an ordinary invoice to file against it.
+          </p>
+          <p>
+            Hourly work is invoiced weekly. Fixed-scope work is half on start, half on delivery.
+            A trial task is invoiced once, on delivery.
           </p>
         </div>
       </details>
