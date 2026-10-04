@@ -1486,6 +1486,31 @@ app.<span class="t">MapGet</span>(<span class="s">"/api/invoices"</span>, <span 
       else status.removeAttribute("data-tone");
     }
 
+    var EMAIL = "amirhossein13e@gmail.com";
+
+    // Replaces the form with a prefilled mailto link. Used when the API cannot be
+    // reached — which is the normal case anywhere the backend is not deployed.
+    function fallbackToEmail(values) {
+      var subject = "Enquiry from " + (values.name || "your site");
+      var body = values.message + "\n\n—\n" + values.name +
+        (values.company ? " · " + values.company : "") + "\n" + values.email;
+
+      var href = "mailto:" + EMAIL +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      form.innerHTML =
+        '<div class="form__sent">' +
+        "<h3>Send it by email instead</h3>" +
+        "<p>The form could not reach the server. Your message is kept below — " +
+        "the button opens your mail app with all of it already filled in.</p>" +
+        '<p style="margin-top:14px"><a class="btn" style="text-decoration:none;display:inline-block" href="' +
+        href + '">Open email</a></p>' +
+        '<p style="margin-top:12px;font-size:13px">Or write to ' +
+        '<a href="mailto:' + EMAIL + '" style="color:inherit">' + EMAIL + "</a>.</p>" +
+        "</div>";
+    }
+
     function checkLocally(values) {
       var problems = {};
       if (values.name.length < 2) problems.name = "At least 2 characters.";
@@ -1558,10 +1583,13 @@ app.<span class="t">MapGet</span>(<span class="s">"/api/invoices"</span>, <span 
             return;
           }
 
-          say("Something went wrong at my end. Email me directly instead.", "bad");
+          fallbackToEmail(values);
         })
         .catch(function () {
-          say("Could not reach the server. Email me directly instead.", "bad");
+          // The API is not hosted everywhere this page is. Rather than leave someone
+          // stuck at a dead form, hand them the working route out — with the message
+          // they already typed preserved so they can paste it.
+          fallbackToEmail(values);
         })
         .then(function () {
           if (button.isConnected) button.disabled = false;

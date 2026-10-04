@@ -20,7 +20,7 @@ import shutil
 # ----------------------------------------------------------------- settings
 # Change SITE_URL once you have a real domain. Open Graph needs absolute URLs,
 # so link previews stay blank until this is correct.
-SITE_URL = "https://amir-pce.vercel.app"
+SITE_URL = "https://amir-pce.github.io"
 
 AUTHOR = "Amirhossein"
 DESCRIPTION = (
